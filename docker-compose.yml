@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  app:
+    image: 'wrtest-docker:latest'
+    build:
+      context: .
+    container_name: wrtest
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/wrtestbase
+      - SPRING_DATASOURCE_USERNAME=wrtestuser
+      - SPRING_DATASOURCE_PASSWORD=wrtestpassword
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - '8080:8080'
+  db:
+    image: 'postgres:latest'
+    container_name: db
+    environment:
+      - POSTGRES_DB=wrtestbase
+      - POSTGRES_USER=wrtestuser
+      - POSTGRES_PASSWORD=wrtestpassword
